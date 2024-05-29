@@ -168,15 +168,15 @@ QALY_function_master <- function(calibrated_inc, scenario = "F0", gender = "male
     age <- starting_age
     for (i in 1:n_cycles) {
       q_matrix_2[i, "No_MASH"] <- 1
-      q_matrix_2[i, "F0"] <- UD_F0
-      q_matrix_2[i, "F1"] <- UD_F1
-      q_matrix_2[i, "F2"] <- UD_F2
-      q_matrix_2[i, "F3"] <- UD_F3
-      q_matrix_2[i, "F4"] <- UD_F4
-      q_matrix_2[i, "HCC"] <- UD_HCC
-      q_matrix_2[i, "DCC"] <- UD_DCC
-      q_matrix_2[i, "LT"] <- UD_LT
-      q_matrix_2[i, "PLT"] <- UD_PLT
+      q_matrix_2[i, "F0"] <- UD_F0 / UD_F0
+      q_matrix_2[i, "F1"] <- UD_F1 / UD_F0
+      q_matrix_2[i, "F2"] <- UD_F2 / UD_F0
+      q_matrix_2[i, "F3"] <- UD_F3 / UD_F0
+      q_matrix_2[i, "F4"] <- UD_F4 / UD_F0
+      q_matrix_2[i, "HCC"] <- UD_HCC / UD_F0
+      q_matrix_2[i, "DCC"] <- UD_DCC / UD_F0
+      q_matrix_2[i, "LT"] <- UD_LT / UD_F0
+      q_matrix_2[i, "PLT"] <- UD_PLT / UD_F0
       q_matrix_2[i, "Death"] <- 0
 
       age <- min(age + 1, 101)

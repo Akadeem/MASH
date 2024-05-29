@@ -454,7 +454,7 @@ Fig2 <- pyramid(
   female.morbidity2,
   male.mortality2,
   female.mortality2,
-  14,
+  12,
   "Total QALE losses associated with per case MASH",
   2,
   c(.96, .96),
@@ -482,9 +482,9 @@ Fig3.1 <- pyramid(
   female.morbidity3.1,
   male.mortality3.1,
   female.mortality3.1,
-  4,
+  3,
   "Lifetime QALE losses of subjects associated with MASH | Age 0-9",
-  2,
+  1,
   c(.96, .04),
   c("right", "bottom")
 )
@@ -508,9 +508,9 @@ Fig3.2 <- pyramid(
   female.morbidity3.2,
   male.mortality3.2,
   female.mortality3.2,
-  4,
+  3,
   "Lifetime QALE losses of subjects associated with MASH | Age 10-19",
-  2,
+  1,
   c(.96, .04),
   c("right", "bottom")
 )
@@ -534,9 +534,9 @@ Fig3.3 <- pyramid(
   female.morbidity3.3,
   male.mortality3.3,
   female.mortality3.3,
-  4,
+  3,
   "Lifetime QALE losses of subjects associated with MASH | Age 20-29",
-  2,
+  1,
   c(.96, .04),
   c("right", "bottom")
 )
@@ -560,9 +560,9 @@ Fig3.4 <- pyramid(
   female.morbidity3.4,
   male.mortality3.4,
   female.mortality3.4,
-  4,
+  3,
   "Lifetime QALE losses of subjects associated with MASH | Age 30-39",
-  2,
+  1,
   c(.96, .04),
   c("right", "bottom")
 )
@@ -586,9 +586,9 @@ Fig3.5 <- pyramid(
   female.morbidity3.5,
   male.mortality3.5,
   female.mortality3.5,
-  4,
+  3,
   "Lifetime QALE losses of subjects associated with MASH | Age 40-49",
-  2,
+  1,
   c(.96, .04),
   c("right", "bottom")
 )
@@ -612,9 +612,9 @@ Fig3.6 <- pyramid(
   female.morbidity3.6,
   male.mortality3.6,
   female.mortality3.6,
-  4,
+  3,
   "Lifetime QALE losses of subjects associated with MASH | Age 50-59",
-  2,
+  1,
   c(.96, .04),
   c("right", "bottom")
 )
@@ -638,9 +638,9 @@ Fig3.7 <- pyramid(
   female.morbidity3.7,
   male.mortality3.7,
   female.mortality3.7,
-  4,
+  3,
   "Lifetime QALE losses of subjects associated with MASH | Age 60-69",
-  2,
+  1,
   c(.96, .04),
   c("right", "bottom")
 )
@@ -664,9 +664,9 @@ Fig3.8 <- pyramid(
   female.morbidity3.8,
   male.mortality3.8,
   female.mortality3.8,
-  4,
+  3,
   "Lifetime QALE losses of subjects associated with MASH | Age 70-79",
-  2,
+  1,
   c(.96, .04),
   c("right", "bottom")
 )
@@ -690,9 +690,9 @@ Fig3.9 <- pyramid(
   female.morbidity3.9,
   male.mortality3.9,
   female.mortality3.9,
-  4,
+  3,
   "Lifetime QALE losses of subjects associated with MASH | Age 80+",
-  2,
+  1,
   c(.96, .04),
   c("right", "bottom")
 )
@@ -733,9 +733,9 @@ Fig5 <- pyramid(
   female.morbidity5,
   male.mortality5,
   female.mortality5,
-  150000,
+  100000,
   "Total QALE losses associated with all incident MASH cases per year",
-  50000,
+  25000,
   c(.96, .96),
   c("right", "top")
 )
@@ -760,9 +760,9 @@ Fig6 <- pyramid(
   female.morbidity6,
   male.mortality6,
   female.mortality6,
-  3000000,
+  2000000,
   "Total population QALE losses associated with MASH",
-  1000000,
+  500000,
   c(.96, .04),
   c("right", "bottom")
 )
