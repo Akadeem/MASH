@@ -2,7 +2,7 @@
 # setwd(dirname(script_path)) # my current Working Directory
 rm(list = ls())
 
-re_calib <- F
+re_calib <- TRUE
 # To control:
 # whether to run the calibration function (T),
 # or to use the previously calibrated value directly (F).
@@ -18,7 +18,7 @@ library(readxl)
 library(tidyverse)
 
 # Transition probabilities between states ----
-df <- read.csv("data/TPs.csv")
+df <- read.csv("MASH/data/TPs.csv")
 list2env(df, .GlobalEnv)
 rm(df)
 
@@ -26,9 +26,9 @@ rm(df)
 # Lifetable 2019 ----
 age_n <- 1:101
 
-tpDn_male <- read_excel("data/Table02.xlsx", range = "B5:B104", col_names = "prob")
+tpDn_male <- read_excel("MASH/data/Table02.xlsx", range = "B5:B104", col_names = "prob")
 tpDn_male <- rbind(tpDn_male, 1)
-tpDn_female <- read_excel("data/Table03.xlsx", range = "B5:B104", col_names = "prob")
+tpDn_female <- read_excel("MASH/data/Table03.xlsx", range = "B5:B104", col_names = "prob")
 tpDn_female <- rbind(tpDn_female, 1)
 
 mat_tpDn <- data.frame("age" = age_n, "male" = tpDn_male$prob, "female" = tpDn_female$prob)
@@ -37,19 +37,19 @@ rm(tpDn_male, tpDn_female)
 
 # Risk ratios by age ----
 ## Table S5 and Table S6
-df <- read.csv("data/prevObesity.csv")
+df <- read.csv("MASH/data/prevObesity.csv")
 prev_obes_lookup <- setNames(df$prevalence, df$agegroup)
 age_grp1 <- cut(age_n, breaks = c(0, 1, 5, 11, 19, 39, 59, 101))
 prev_obes <- prev_obes_lookup[age_grp1]
 
-df <- read.csv("data/prevDiabetes.csv")
+df <- read.csv("MASH/data/prevDiabetes.csv")
 prev_diab_lookup <- setNames(df$prevalence, df$agegroup)
 age_grp1 <- cut(age_n, breaks = c(0, 4, 9, 14, 17, 44, 64, 101))
 prev_diab <- prev_diab_lookup[age_grp1]
 
 
 
-# A multivariable analysis found that obesity and diabetes have relative risk ratios of NASH of 10.07 and 1.78, respectively
+# A multivariable analysis found that obesity and diabetes have relative risk ratios of MASH of 10.07 and 1.78, respectively
 # Eskridge W, Vierling JM, Gosbee W, Wan GA, Hyunh ML, Chang HE. Screening for undiagnosed non-alcoholic fatty liver disease (NAFLD) and non-alcoholic steatohepatitis (NASH): A population-based risk factor assessment using vibration controlled transient elastography (VCTE). PLoS One. 2021;16(11):e0260320.
 RR_obes <- 10.07
 RR_diab <- 1.78
@@ -63,20 +63,20 @@ incRR <- setNames(incRR, age_grp1)
 
 
 # Utility decrements----
-df <- read.csv("data/Utilities.csv")
+df <- read.csv("MASH/data/Utilities.csv")
 list2env(df, .GlobalEnv)
 rm(df)
 
 
 # Utilities by age ----
-mat_uNN_lookup <- read.csv("data/uNN_lookup.csv")
+mat_uNN_lookup <- read.csv("MASH/data/uNN_lookup.csv")
 
 age_grp2 <- cut(age_n, breaks = c(0, 24, 34, 44, 54, 64, 74, 101))
 mat_utility <- mat_uNN_lookup[age_grp2, ]
 
 
 # US population ----
-mat_uspop <- read.csv("data/USPopulation.csv")
+mat_uspop <- read.csv("MASH/data/USPopulation.csv")
 
 mat_uspop_10 <- data.frame(
   agegroup = c("0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"),
@@ -106,14 +106,14 @@ mat_uspop_10 <- data.frame(
 
 # Calibration ----
 ## load the previously calibrated incidence
-inc_inuse <- read.csv("data/calibrated_inc.csv")$incidence
+inc_inuse <- read.csv("MASH/data/calibrated_inc.csv")$incidence
 
 ## if a re-calibration is wanted, then load the function and run it through
 ## the re-run result will replace the previously calibrated one
-## and be saved as a csv file ("data/calibrated_inc.csv")
+## and be saved as a csv file ("MASH/data/calibrated_inc.csv")
 
 if (re_calib) {
-  source("function/Calibration2.R")
+  source("MASH/function/Calibration2.R")
 
   calibrated_incs <- NA
   opt_obj <- list()
@@ -356,7 +356,7 @@ if (re_calib) {
   inc_inuse <- mean(calibrated_incs[3:7])
 
   write.csv(data.frame("incidence" = inc_inuse),
-    file = "data/calibrated_inc.csv", row.names = FALSE
+    file = "MASH/data/calibrated_inc.csv", row.names = FALSE
   )
 }
 
@@ -382,11 +382,11 @@ print(paste0("Population Incident Cases = ", round(Total_Inc)))
 print(paste0("Population Overall Incidence = ", signif(Total_Inc / sum(mat_uspop[, 2:3]) * 100, 4), "%"))
 
 # QALY Function body ----
-source("function/QALY_function_master.R")
+source("MASH/function/QALY_function_master.R")
 
 
 # Results of all combinations
-scenarios <- c("F0", "No_incidence", "No_NASH")
+scenarios <- c("F0", "No_incidence", "No_MASH")
 genders <- c("male", "female")
 for (scenario in scenarios) {
   for (gender in genders) {
@@ -432,30 +432,30 @@ Fig4 <-
 
 # General function to draw the pyramid plots ----
 
-source("function/pyramid.R")
+source("MASH/function/pyramid.R")
 
 
 # For Fig2 ----
-mat_F0_with_NASH_male <- Results.F0.male$return.mat
-mat_F0_with_NASH_female <- Results.F0.female$return.mat
+mat_F0_with_MASH_male <- Results.F0.male$return.mat
+mat_F0_with_MASH_female <- Results.F0.female$return.mat
 
-mat_F0_without_NASH_male <- Results.No_incidence.male$return.mat
-mat_F0_without_NASH_female <- Results.No_incidence.female$return.mat
+mat_F0_without_MASH_male <- Results.No_incidence.male$return.mat
+mat_F0_without_MASH_female <- Results.No_incidence.female$return.mat
 
-male.morbidity2 <- -(((mat_F0_without_NASH_male$QALYbyAge / mat_F0_without_NASH_male$LEbyAge) - (mat_F0_with_NASH_male$QALYbyAge / mat_F0_with_NASH_male$LEbyAge)) * mat_F0_with_NASH_male$LEbyAge) / 1000
-female.morbidity2 <- (((mat_F0_without_NASH_female$QALYbyAge / mat_F0_without_NASH_female$LEbyAge) - (mat_F0_with_NASH_female$QALYbyAge / mat_F0_with_NASH_female$LEbyAge)) * mat_F0_with_NASH_female$LEbyAge) / 1000
+male.morbidity2 <- -(((mat_F0_without_MASH_male$QALYbyAge / mat_F0_without_MASH_male$LEbyAge) - (mat_F0_with_MASH_male$QALYbyAge / mat_F0_with_MASH_male$LEbyAge)) * mat_F0_with_MASH_male$LEbyAge) / 1000
+female.morbidity2 <- (((mat_F0_without_MASH_female$QALYbyAge / mat_F0_without_MASH_female$LEbyAge) - (mat_F0_with_MASH_female$QALYbyAge / mat_F0_with_MASH_female$LEbyAge)) * mat_F0_with_MASH_female$LEbyAge) / 1000
 
-male.mortality2 <- -(mat_F0_without_NASH_male$LEbyAge - mat_F0_with_NASH_male$LEbyAge) * (mat_F0_with_NASH_male$QALYbyAge / mat_F0_with_NASH_male$LEbyAge) / 1000
-female.mortality2 <- (mat_F0_without_NASH_female$LEbyAge - mat_F0_with_NASH_female$LEbyAge) * (mat_F0_with_NASH_female$QALYbyAge / mat_F0_with_NASH_female$LEbyAge) / 1000
+male.mortality2 <- -(mat_F0_without_MASH_male$LEbyAge - mat_F0_with_MASH_male$LEbyAge) * (mat_F0_with_MASH_male$QALYbyAge / mat_F0_with_MASH_male$LEbyAge) / 1000
+female.mortality2 <- (mat_F0_without_MASH_female$LEbyAge - mat_F0_with_MASH_female$LEbyAge) * (mat_F0_with_MASH_female$QALYbyAge / mat_F0_with_MASH_female$LEbyAge) / 1000
 
 Fig2 <- pyramid(
-  mat_F0_with_NASH_male$age_range,
+  mat_F0_with_MASH_male$age_range,
   male.morbidity2,
   female.morbidity2,
   male.mortality2,
   female.mortality2,
   14,
-  "Total QALE losses associated with per case NASH",
+  "Total QALE losses associated with per case MASH",
   2,
   c(.96, .96),
   c("right", "top")
@@ -483,7 +483,7 @@ Fig3.1 <- pyramid(
   male.mortality3.1,
   female.mortality3.1,
   4,
-  "Lifetime QALE losses of subjects associated with NASH | Age 0-9",
+  "Lifetime QALE losses of subjects associated with MASH | Age 0-9",
   2,
   c(.96, .04),
   c("right", "bottom")
@@ -509,7 +509,7 @@ Fig3.2 <- pyramid(
   male.mortality3.2,
   female.mortality3.2,
   4,
-  "Lifetime QALE losses of subjects associated with NASH | Age 10-19",
+  "Lifetime QALE losses of subjects associated with MASH | Age 10-19",
   2,
   c(.96, .04),
   c("right", "bottom")
@@ -535,7 +535,7 @@ Fig3.3 <- pyramid(
   male.mortality3.3,
   female.mortality3.3,
   4,
-  "Lifetime QALE losses of subjects associated with NASH | Age 20-29",
+  "Lifetime QALE losses of subjects associated with MASH | Age 20-29",
   2,
   c(.96, .04),
   c("right", "bottom")
@@ -561,7 +561,7 @@ Fig3.4 <- pyramid(
   male.mortality3.4,
   female.mortality3.4,
   4,
-  "Lifetime QALE losses of subjects associated with NASH | Age 30-39",
+  "Lifetime QALE losses of subjects associated with MASH | Age 30-39",
   2,
   c(.96, .04),
   c("right", "bottom")
@@ -587,7 +587,7 @@ Fig3.5 <- pyramid(
   male.mortality3.5,
   female.mortality3.5,
   4,
-  "Lifetime QALE losses of subjects associated with NASH | Age 40-49",
+  "Lifetime QALE losses of subjects associated with MASH | Age 40-49",
   2,
   c(.96, .04),
   c("right", "bottom")
@@ -613,7 +613,7 @@ Fig3.6 <- pyramid(
   male.mortality3.6,
   female.mortality3.6,
   4,
-  "Lifetime QALE losses of subjects associated with NASH | Age 50-59",
+  "Lifetime QALE losses of subjects associated with MASH | Age 50-59",
   2,
   c(.96, .04),
   c("right", "bottom")
@@ -639,7 +639,7 @@ Fig3.7 <- pyramid(
   male.mortality3.7,
   female.mortality3.7,
   4,
-  "Lifetime QALE losses of subjects associated with NASH | Age 60-69",
+  "Lifetime QALE losses of subjects associated with MASH | Age 60-69",
   2,
   c(.96, .04),
   c("right", "bottom")
@@ -665,7 +665,7 @@ Fig3.8 <- pyramid(
   male.mortality3.8,
   female.mortality3.8,
   4,
-  "Lifetime QALE losses of subjects associated with NASH | Age 70-79",
+  "Lifetime QALE losses of subjects associated with MASH | Age 70-79",
   2,
   c(.96, .04),
   c("right", "bottom")
@@ -691,7 +691,7 @@ Fig3.9 <- pyramid(
   male.mortality3.9,
   female.mortality3.9,
   4,
-  "Lifetime QALE losses of subjects associated with NASH | Age 80+",
+  "Lifetime QALE losses of subjects associated with MASH | Age 80+",
   2,
   c(.96, .04),
   c("right", "bottom")
@@ -728,13 +728,13 @@ male.mortality5 <- male.mortality2 * inc_pat_10[, "female"]
 female.mortality5 <- female.mortality2 * inc_pat_10[, "female"]
 
 Fig5 <- pyramid(
-  mat_F0_with_NASH_male$age_range,
+  mat_F0_with_MASH_male$age_range,
   male.morbidity5,
   female.morbidity5,
   male.mortality5,
   female.mortality5,
   150000,
-  "Total QALE losses associated with all incident NASH cases per year",
+  "Total QALE losses associated with all incident MASH cases per year",
   50000,
   c(.96, .96),
   c("right", "top")
@@ -742,8 +742,8 @@ Fig5 <- pyramid(
 
 
 # For Fig6 ----
-with_incidence_male <- Results.No_NASH.male$return.pop
-with_incidence_female <- Results.No_NASH.female$return.pop
+with_incidence_male <- Results.No_MASH.male$return.pop
+with_incidence_female <- Results.No_MASH.female$return.pop
 
 without_incidence_male <- Results.No_incidence.male$return.pop
 without_incidence_female <- Results.No_incidence.female$return.pop
@@ -761,7 +761,7 @@ Fig6 <- pyramid(
   male.mortality6,
   female.mortality6,
   3000000,
-  "Total population QALE losses associated with NASH",
+  "Total population QALE losses associated with MASH",
   1000000,
   c(.96, .04),
   c("right", "bottom")
@@ -784,7 +784,7 @@ print(paste0(
 ))
 
 # Open a PDF file
-pdf("www/my_plots.pdf", width = 6, height = 4)
+pdf("MASH/www/my_plots.pdf", width = 6, height = 4)
 
 # Draw the plots
 
@@ -815,19 +815,19 @@ dev.off()
 # TIFF format
 
 # Save Fig2, Fig4, Fig5, and Fig6 as separate files
-tiff("www/Fig2.tiff", width = 6, height = 4, units = "in", res = 300)
+tiff("MASH/www/Fig2.tiff", width = 6, height = 4, units = "in", res = 300)
 plot(Fig2)
 dev.off()
 
-tiff("www/Fig4.tiff", width = 6, height = 4, units = "in", res = 300)
+tiff("MASH/www/Fig4.tiff", width = 6, height = 4, units = "in", res = 300)
 plot(Fig4)
 dev.off()
 
-tiff("www/Fig5.tiff", width = 6, height = 4, units = "in", res = 300)
+tiff("MASH/www/Fig5.tiff", width = 6, height = 4, units = "in", res = 300)
 plot(Fig5)
 dev.off()
 
-tiff("www/Fig6.tiff", width = 6, height = 4, units = "in", res = 300)
+tiff("MASH/www/Fig6.tiff", width = 6, height = 4, units = "in", res = 300)
 plot(Fig6)
 dev.off()
 
@@ -848,4 +848,4 @@ compositefig3 <- grid.arrange(
 )
 
 # Save the output to a TIFF file
-ggsave("www/Fig3.tiff", compositefig3, width = 12, height = 16, dpi = 300)
+ggsave("MASH/www/Fig3.tiff", compositefig3, width = 12, height = 16, dpi = 300)
