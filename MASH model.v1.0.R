@@ -350,10 +350,7 @@ if (re_calib) {
   mean(calibrated_incs[-(1:2)])
   # plot(x = c(1:7), y = calibrated_incs[-(1:2)])
 
-  mean(calibrated_incs[3:7])
-  # plot(x = c(1:7), y = calibrated_incs[3:7])
-
-  inc_inuse <- mean(calibrated_incs[3:7])
+  inc_inuse <- mean(calibrated_incs[-(1:2)])
 
   write.csv(data.frame("incidence" = inc_inuse),
     file = "MASH/data/calibrated_inc.csv", row.names = FALSE
@@ -476,6 +473,8 @@ female.morbidity3.1 <- (((without_incidence_female$get.cycle_QALY. / without_inc
 male.mortality3.1 <- -(without_incidence_male$get.cycle_LE. - with_incidence_male$get.cycle_LE.) * (with_incidence_male$get.cycle_QALY. / with_incidence_male$get.cycle_LE.) / 1000
 female.mortality3.1 <- (without_incidence_female$get.cycle_LE. - with_incidence_female$get.cycle_LE.) * (with_incidence_female$get.cycle_QALY. / with_incidence_female$get.cycle_LE.) / 1000
 
+print(cbind(Results.F0.male$return.cycle5$rownames.get.cycle_QALY.., -male.morbidity3.1 + female.morbidity3.1 - male.mortality3.1 + female.mortality3.1))
+
 Fig3.1 <- pyramid(
   Results.F0.male$return.cycle5$rownames.get.cycle_QALY..,
   male.morbidity3.1,
@@ -501,6 +500,8 @@ female.morbidity3.2 <- (((without_incidence_female$get.cycle_QALY. / without_inc
 
 male.mortality3.2 <- -(without_incidence_male$get.cycle_LE. - with_incidence_male$get.cycle_LE.) * (with_incidence_male$get.cycle_QALY. / with_incidence_male$get.cycle_LE.) / 1000
 female.mortality3.2 <- (without_incidence_female$get.cycle_LE. - with_incidence_female$get.cycle_LE.) * (with_incidence_female$get.cycle_QALY. / with_incidence_female$get.cycle_LE.) / 1000
+
+print(cbind(Results.F0.male$return.cycle5$rownames.get.cycle_QALY.., -male.morbidity3.2 + female.morbidity3.2 - male.mortality3.2 + female.mortality3.2))
 
 Fig3.2 <- pyramid(
   Results.F0.male$return.cycle15$rownames.get.cycle_QALY..,
@@ -528,6 +529,8 @@ female.morbidity3.3 <- (((without_incidence_female$get.cycle_QALY. / without_inc
 male.mortality3.3 <- -(without_incidence_male$get.cycle_LE. - with_incidence_male$get.cycle_LE.) * (with_incidence_male$get.cycle_QALY. / with_incidence_male$get.cycle_LE.) / 1000
 female.mortality3.3 <- (without_incidence_female$get.cycle_LE. - with_incidence_female$get.cycle_LE.) * (with_incidence_female$get.cycle_QALY. / with_incidence_female$get.cycle_LE.) / 1000
 
+print(cbind(Results.F0.male$return.cycle5$rownames.get.cycle_QALY.., -male.morbidity3.3 + female.morbidity3.3 - male.mortality3.3 + female.mortality3.3))
+
 Fig3.3 <- pyramid(
   Results.F0.male$return.cycle25$rownames.get.cycle_QALY..,
   male.morbidity3.3,
@@ -553,6 +556,8 @@ female.morbidity3.4 <- (((without_incidence_female$get.cycle_QALY. / without_inc
 
 male.mortality3.4 <- -(without_incidence_male$get.cycle_LE. - with_incidence_male$get.cycle_LE.) * (with_incidence_male$get.cycle_QALY. / with_incidence_male$get.cycle_LE.) / 1000
 female.mortality3.4 <- (without_incidence_female$get.cycle_LE. - with_incidence_female$get.cycle_LE.) * (with_incidence_female$get.cycle_QALY. / with_incidence_female$get.cycle_LE.) / 1000
+
+print(cbind(Results.F0.male$return.cycle5$rownames.get.cycle_QALY.., -male.morbidity3.4 + female.morbidity3.4 - male.mortality3.4 + female.mortality3.4))
 
 Fig3.4 <- pyramid(
   Results.F0.male$return.cycle35$rownames.get.cycle_QALY..,
@@ -580,6 +585,8 @@ female.morbidity3.5 <- (((without_incidence_female$get.cycle_QALY. / without_inc
 male.mortality3.5 <- -(without_incidence_male$get.cycle_LE. - with_incidence_male$get.cycle_LE.) * (with_incidence_male$get.cycle_QALY. / with_incidence_male$get.cycle_LE.) / 1000
 female.mortality3.5 <- (without_incidence_female$get.cycle_LE. - with_incidence_female$get.cycle_LE.) * (with_incidence_female$get.cycle_QALY. / with_incidence_female$get.cycle_LE.) / 1000
 
+print(cbind(Results.F0.male$return.cycle5$rownames.get.cycle_QALY.., -male.morbidity3.5 + female.morbidity3.5 - male.mortality3.5 + female.mortality3.5))
+
 Fig3.5 <- pyramid(
   Results.F0.male$return.cycle45$rownames.get.cycle_QALY..,
   male.morbidity3.5,
@@ -605,6 +612,8 @@ female.morbidity3.6 <- (((without_incidence_female$get.cycle_QALY. / without_inc
 
 male.mortality3.6 <- -(without_incidence_male$get.cycle_LE. - with_incidence_male$get.cycle_LE.) * (with_incidence_male$get.cycle_QALY. / with_incidence_male$get.cycle_LE.) / 1000
 female.mortality3.6 <- (without_incidence_female$get.cycle_LE. - with_incidence_female$get.cycle_LE.) * (with_incidence_female$get.cycle_QALY. / with_incidence_female$get.cycle_LE.) / 1000
+
+print(cbind(Results.F0.male$return.cycle5$rownames.get.cycle_QALY.., -male.morbidity3.6 + female.morbidity3.6 - male.mortality3.6 + female.mortality3.6))
 
 Fig3.6 <- pyramid(
   Results.F0.male$return.cycle55$rownames.get.cycle_QALY..,
@@ -632,6 +641,8 @@ female.morbidity3.7 <- (((without_incidence_female$get.cycle_QALY. / without_inc
 male.mortality3.7 <- -(without_incidence_male$get.cycle_LE. - with_incidence_male$get.cycle_LE.) * (with_incidence_male$get.cycle_QALY. / with_incidence_male$get.cycle_LE.) / 1000
 female.mortality3.7 <- (without_incidence_female$get.cycle_LE. - with_incidence_female$get.cycle_LE.) * (with_incidence_female$get.cycle_QALY. / with_incidence_female$get.cycle_LE.) / 1000
 
+print(cbind(Results.F0.male$return.cycle5$rownames.get.cycle_QALY.., -male.morbidity3.7 + female.morbidity3.7 - male.mortality3.7 + female.mortality3.7))
+
 Fig3.7 <- pyramid(
   Results.F0.male$return.cycle65$rownames.get.cycle_QALY..,
   male.morbidity3.7,
@@ -658,6 +669,8 @@ female.morbidity3.8 <- (((without_incidence_female$get.cycle_QALY. / without_inc
 male.mortality3.8 <- -(without_incidence_male$get.cycle_LE. - with_incidence_male$get.cycle_LE.) * (with_incidence_male$get.cycle_QALY. / with_incidence_male$get.cycle_LE.) / 1000
 female.mortality3.8 <- (without_incidence_female$get.cycle_LE. - with_incidence_female$get.cycle_LE.) * (with_incidence_female$get.cycle_QALY. / with_incidence_female$get.cycle_LE.) / 1000
 
+print(cbind(Results.F0.male$return.cycle5$rownames.get.cycle_QALY.., -male.morbidity3.8 + female.morbidity3.8 - male.mortality3.8 + female.mortality3.8))
+
 Fig3.8 <- pyramid(
   Results.F0.male$return.cycle75$rownames.get.cycle_QALY..,
   male.morbidity3.8,
@@ -683,6 +696,8 @@ female.morbidity3.9 <- (((without_incidence_female$get.cycle_QALY. / without_inc
 
 male.mortality3.9 <- -(without_incidence_male$get.cycle_LE. - with_incidence_male$get.cycle_LE.) * (with_incidence_male$get.cycle_QALY. / with_incidence_male$get.cycle_LE.) / 1000
 female.mortality3.9 <- (without_incidence_female$get.cycle_LE. - with_incidence_female$get.cycle_LE.) * (with_incidence_female$get.cycle_QALY. / with_incidence_female$get.cycle_LE.) / 1000
+
+print(cbind(Results.F0.male$return.cycle5$rownames.get.cycle_QALY.., -male.morbidity3.9 + female.morbidity3.9 - male.mortality3.9 + female.mortality3.9))
 
 Fig3.9 <- pyramid(
   Results.F0.male$return.cycle90$rownames.get.cycle_QALY..,
@@ -753,6 +768,8 @@ female.morbidity6 <- (((without_incidence_female$QALY_pop / without_incidence_fe
 
 male.mortality6 <- -(without_incidence_male$LE_pop - with_incidence_male$LE_pop) * (with_incidence_male$QALY_pop / with_incidence_male$LE_pop)
 female.mortality6 <- (without_incidence_female$LE_pop - with_incidence_female$LE_pop) * (with_incidence_female$QALY_pop / with_incidence_female$LE_pop)
+
+print(cbind(with_incidence_male$age_rang, -male.morbidity6 + female.morbidity6 - male.mortality6 + female.mortality6))
 
 Fig6 <- pyramid(
   with_incidence_male$age_range,
