@@ -1,7 +1,7 @@
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
 
 # MASH Model
-*MASH Model ^(c)^* by **[Andrew H Briggs]** and **[Ziyi Lin (林子义)]**
+*MASH Model <sup>(c)</sup>* by **[Andrew H Briggs]** and **[Ziyi Lin (林子义)]**
 
 ## Description
 This repository contains an R-based model for estimating the burden of MASH (**M**etabolic dysfunction-**A**ssociated **S**teato**H**epatitis) by age, sex and into the relative contribution of morbidity and mortality developed with Boehringer Ingelheim. 
