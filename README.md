@@ -29,7 +29,7 @@ To run the model, follow these steps:
 
 The script will print out the total Quality-Adjusted Life Expectancy (QALE) losses among males, females, and the total population. These results will be displayed in the console.
 
-The script will also generate several plots and save them as PDF and TIFF files. The PDF file `my_plots.pdf` will contain all the plots and can be found in the `MASH/www/` directory. Individual plots will be saved as separate TIFF files in the `MASH/www/` directory.
+The script will also generate several plots and save them as PDF and TIFF files. The PDF file `my_plots.pdf` will contain all the plots and can be found in the `www/` directory. Individual plots will be saved as separate TIFF files in the `www/` directory.
 
 ## Contact
 If you have any questions or feedback, please open an issue on this repository or contact [Andrew H Briggs] at andrew.briggs@lshtm.ac.uk.

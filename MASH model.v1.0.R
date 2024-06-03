@@ -18,7 +18,7 @@ library(readxl)
 library(tidyverse)
 
 # Transition probabilities between states ----
-df <- read.csv("MASH/data/TPs.csv")
+df <- read.csv("data/TPs.csv")
 list2env(df, .GlobalEnv)
 rm(df)
 
@@ -26,9 +26,9 @@ rm(df)
 # Lifetable 2019 ----
 age_n <- 1:101
 
-tpDn_male <- read_excel("MASH/data/Table02.xlsx", range = "B5:B104", col_names = "prob")
+tpDn_male <- read_excel("data/Table02.xlsx", range = "B5:B104", col_names = "prob")
 tpDn_male <- rbind(tpDn_male, 1)
-tpDn_female <- read_excel("MASH/data/Table03.xlsx", range = "B5:B104", col_names = "prob")
+tpDn_female <- read_excel("data/Table03.xlsx", range = "B5:B104", col_names = "prob")
 tpDn_female <- rbind(tpDn_female, 1)
 
 mat_tpDn <- data.frame("age" = age_n, "male" = tpDn_male$prob, "female" = tpDn_female$prob)
@@ -37,12 +37,12 @@ rm(tpDn_male, tpDn_female)
 
 # Risk ratios by age ----
 ## Table S5 and Table S6
-df <- read.csv("MASH/data/prevObesity.csv")
+df <- read.csv("data/prevObesity.csv")
 prev_obes_lookup <- setNames(df$prevalence, df$agegroup)
 age_grp1 <- cut(age_n, breaks = c(0, 1, 5, 11, 19, 39, 59, 101))
 prev_obes <- prev_obes_lookup[age_grp1]
 
-df <- read.csv("MASH/data/prevDiabetes.csv")
+df <- read.csv("data/prevDiabetes.csv")
 prev_diab_lookup <- setNames(df$prevalence, df$agegroup)
 age_grp1 <- cut(age_n, breaks = c(0, 4, 9, 14, 17, 44, 64, 101))
 prev_diab <- prev_diab_lookup[age_grp1]
@@ -63,20 +63,20 @@ incRR <- setNames(incRR, age_grp1)
 
 
 # Utility decrements----
-df <- read.csv("MASH/data/Utilities.csv")
+df <- read.csv("data/Utilities.csv")
 list2env(df, .GlobalEnv)
 rm(df)
 
 
 # Utilities by age ----
-mat_uNN_lookup <- read.csv("MASH/data/uNN_lookup.csv")
+mat_uNN_lookup <- read.csv("data/uNN_lookup.csv")
 
 age_grp2 <- cut(age_n, breaks = c(0, 24, 34, 44, 54, 64, 74, 101))
 mat_utility <- mat_uNN_lookup[age_grp2, ]
 
 
 # US population ----
-mat_uspop <- read.csv("MASH/data/USPopulation.csv")
+mat_uspop <- read.csv("data/USPopulation.csv")
 
 mat_uspop_10 <- data.frame(
   agegroup = c("0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"),
@@ -106,14 +106,14 @@ mat_uspop_10 <- data.frame(
 
 # Calibration ----
 ## load the previously calibrated incidence
-inc_inuse <- read.csv("MASH/data/calibrated_inc.csv")$incidence
+inc_inuse <- read.csv("data/calibrated_inc.csv")$incidence
 
 ## if a re-calibration is wanted, then load the function and run it through
 ## the re-run result will replace the previously calibrated one
-## and be saved as a csv file ("MASH/data/calibrated_inc.csv")
+## and be saved as a csv file ("data/calibrated_inc.csv")
 
 if (re_calib) {
-  source("MASH/function/Calibration2.R")
+  source("function/Calibration2.R")
 
   calibrated_incs <- NA
   opt_obj <- list()
@@ -353,7 +353,7 @@ if (re_calib) {
   inc_inuse <- mean(calibrated_incs[-(1:2)])
 
   write.csv(data.frame("incidence" = inc_inuse),
-    file = "MASH/data/calibrated_inc.csv", row.names = FALSE
+    file = "data/calibrated_inc.csv", row.names = FALSE
   )
 }
 
@@ -379,7 +379,7 @@ print(paste0("Population Incident Cases = ", round(Total_Inc)))
 print(paste0("Population Overall Incidence = ", signif(Total_Inc / sum(mat_uspop[, 2:3]) * 100, 4), "%"))
 
 # QALY Function body ----
-source("MASH/function/QALY_function_master.R")
+source("function/QALY_function_master.R")
 
 
 # Results of all combinations
@@ -429,7 +429,7 @@ Fig4 <-
 
 # General function to draw the pyramid plots ----
 
-source("MASH/function/pyramid.R")
+source("function/pyramid.R")
 
 
 # For Fig2 ----
@@ -801,7 +801,7 @@ print(paste0(
 ))
 
 # Open a PDF file
-pdf("MASH/www/my_plots.pdf", width = 6, height = 4)
+pdf("www/my_plots.pdf", width = 6, height = 4)
 
 # Draw the plots
 
@@ -832,19 +832,19 @@ dev.off()
 # TIFF format
 
 # Save Fig2, Fig4, Fig5, and Fig6 as separate files
-tiff("MASH/www/Fig2.tiff", width = 6, height = 4, units = "in", res = 300)
+tiff("www/Fig2.tiff", width = 6, height = 4, units = "in", res = 300)
 plot(Fig2)
 dev.off()
 
-tiff("MASH/www/Fig4.tiff", width = 6, height = 4, units = "in", res = 300)
+tiff("www/Fig4.tiff", width = 6, height = 4, units = "in", res = 300)
 plot(Fig4)
 dev.off()
 
-tiff("MASH/www/Fig5.tiff", width = 6, height = 4, units = "in", res = 300)
+tiff("www/Fig5.tiff", width = 6, height = 4, units = "in", res = 300)
 plot(Fig5)
 dev.off()
 
-tiff("MASH/www/Fig6.tiff", width = 6, height = 4, units = "in", res = 300)
+tiff("www/Fig6.tiff", width = 6, height = 4, units = "in", res = 300)
 plot(Fig6)
 dev.off()
 
@@ -865,4 +865,4 @@ compositefig3 <- grid.arrange(
 )
 
 # Save the output to a TIFF file
-ggsave("MASH/www/Fig3.tiff", compositefig3, width = 12, height = 16, dpi = 300)
+ggsave("www/Fig3.tiff", compositefig3, width = 12, height = 16, dpi = 300)
